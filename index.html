@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-3.4.1.min.js"></script>
+    <title>Cover Set</title>
+
+    <style type="text/css">
+        .song{
+            font-weight: bold;
+        }
+        table{
+            text-align: center;
+            width: 100%;
+            border: 20px solid black;
+            border-collapse: collapse;
+        }
+        h1{
+            text-align: center;
+        }
+        body{
+            background-color:#FF0066;
+        }
+        p{
+            color: #000000;
+            text-align: center
+        }
+        form{
+
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cover Album</h1>
+    <p> Select a Genre to display specific songs:</p>
+    <form>
+            <select name="Genres" id="G">
+            <option value="Rap">Rap</option>
+            <option value="Hip-Hop">Hip-Hop</option>
+            <option value="R and B">R and B</option>            
+            <option value="Soul">Soul</option>
+            <option value="Alternative">Alternative</option>
+            <option value="Indie">Indie</option>
+            <option value="Pop">Pop</option> 
+        </select>
+        <input type="button" value="Submit" onclick="hideSongs()">
+    </form>
+    <table>
+        <tr class="song"><td id="song0"></td></tr>
+        <tr><td id="info0"></td></tr>
+
+        <tr class="song"><td id="song1"></td></tr>
+        <tr><td id="info1"></td></tr>
+
+
+        <tr class="song"><td id="song2"></td></tr>
+        <tr><td id="info2"></td></tr>
+  
+
+        <tr class="song"><td id="song3"></td></tr>
+        <tr><td id="info3"></td></tr>
+
+
+        <tr class="song"><td id="song4"></td></tr>
+        <tr><td id="info4"></td></tr>
+
+
+        <tr class="song"><td id="song5"></td></tr>
+        <tr><td id="info5"></td></tr>
+ 
+
+        <tr class="song"><td id="song6"></td></tr>
+        <tr><td id="info6"></td></tr>
+
+
+        <tr class="song"><td id="song7"></td></tr>
+        <tr><td id="info7"></td></tr>
+
+
+        <tr class="song"><td id="song8"></td></tr>
+        <tr><td id="info8"></td></tr>
+
+        <tr class="song"><td id="song9"></td></tr>
+        <tr><td id="info9"></td></tr>
+
+     
+    </table>
+
+     <script>
+        window.onload= "display_songs()";
+        var songs = []
+        function Song(name, arts, release, classifications){
+            this.title = name;
+            this.artists = arts;
+            this.year = release;
+            this.genres = classifications;
+        }
+
+    ultraS = new Song("UltraSound", "Joyner Lucas", 2017, ["Hip-Hop", "Rap"]);
+    var song1 = JSON.parse(JSON.stringify(ultraS));
+    songs.push(song1);
+
+    someB = new Song("Sombody That I Used to Know",
+        ["Gotye", "Kimbra"], 2011, ["Alternative","Indie", "Pop"]);
+    var song2 = JSON.parse(JSON.stringify(someB));
+    songs.push(song2);
+
+    app = new Song("Apparently", "Cole", 2014, ["Hip-Hop", "Rap"]);
+    var song3 = JSON.parse(JSON.stringify(app));
+    songs.push(song3);
+
+    iceM = new Song("Ice Melts", ["Drake", "Young Thug"],
+        2017, ["Hip-Hop", "Rap"]);
+    var song4 = JSON.parse(JSON.stringify(iceM));
+    songs.push(song4);
+
+    iWantYouA = new Song("I Want You Around",
+        "Snoh Aalegra", 2019, ["R and B", "Soul"]);
+    var song5 = JSON.parse(JSON.stringify(iWantYouA));
+    songs.push(song5);
+
+    makeItB = new Song("Make It Better", 
+        ["Anderson Park", " Smokey Robinson"], 2019, ["R and B", "Soul"]);
+    var song6 = JSON.parse(JSON.stringify(makeItB));
+    songs.push(song6);
+
+    peerP = new Song("Peer Pressure", ["James Bay", " Julia Michaels"],
+        2019, ["Alternative", "Indie"]);
+    var song7 = JSON.parse(JSON.stringify(peerP));
+    songs.push(song7);
+
+    bestF = new Song("Best Friend", "Rex Orange County", 2017, 
+        ["Alternative", "Indie"]);
+    var song8 = JSON.parse(JSON.stringify(bestF));
+    songs.push(song8);
+
+    foolForY = new Song("Fool For You", "Snoh Aalegra", 2017, ["R and B", "Soul"]);
+    var song9 = JSON.parse(JSON.stringify(foolForY));
+    songs.push(song9);
+
+    bounceB = new Song("Bounce Back", "Big Sean", 2017, ["Hip-Hop", "Rap"]);
+    var song10 = JSON.parse(JSON.stringify(bounceB));
+    songs.push(song10);
+
+    
+            $(document).ready(function(){
+
+
+            for (var i = 0; i < songs.length; i++) {
+                var outputSong = document.getElementById(('song'+i));
+                var outputInfo = document.getElementById(('info'+i));
+
+                outputSong.innerHTML = songs[i].title + "<br>";
+                outputInfo.innerHTML = ("Artists: " + songs[i].artists.toString() +"<br>") + 
+                ("Genres: " +songs[i].genres.toString() + "<br>") 
+                +("Released: " + songs[i].year + "<br>");
+            }
+        });
+
+        function hideSongs(){
+            var selectID = document.getElementById(('G'));
+            selectedGenre = selectID.options[selectID.selectedIndex].value
+            var found;
+            for (var i = 0; i < songs.length; i++) {
+            found = false;
+            var outputSong = document.getElementById(('song'+i));
+            var outputInfo = document.getElementById(('info'+i));
+
+                for (var j = 0; j < songs[i].genres.length; j++) {
+                    if (songs[i].genres[j] == selectedGenre) {
+                        found = true;
+                        break;
+                    }
+                    else{
+                        found = false;
+                    }
+                }
+
+                if(found == false){
+                    outputSong.innerHTML = null;
+                    outputInfo.innerHTML = null;
+                }
+                else{
+                    outputSong.innerHTML = songs[i].title + "<br>";
+                    outputInfo.innerHTML = ("Artists: " + songs[i].artists.toString() +"<br>") + 
+                    ("Genres: " +songs[i].genres.toString() + "<br>") 
+                    +("Released: " + songs[i].year + "<br>");
+                }
+            }
+        }
+    </script>
+</body>
+</html>
